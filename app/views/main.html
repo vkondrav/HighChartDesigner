@@ -13,74 +13,38 @@
   <div class="row">
 
     <!--Series-->
-    <div class="col-md-6">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h4 class="center panel-title">
-            Series
-          </h4>
-        </div>              
-        <div class="panel-body">
+    <panel size="6" title="Series" ng-cloak>
           
-          <div class="row cnstMargin">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
-              <div class="input-group">
-                <span class="input-group-addon">Name</span>
-                <input type="text" class="form-control" ng-model="seriesName">
-              </div>
-            </div>
-            <div class="col-md-1"></div>
-          </div>
-
-          <div class="row cnstMargin">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
-              <div class="input-group">
-                <span class="input-group-addon">Color</span>
-                <input class="color form-control" ng-model="seriesColor">
-              </div>
-            </div>
-            <div class="col-md-1"></div>
-          </div>
-
-          <div class="row cnstMargin">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
-              <button type="button" class="btn btn-success btn-block" ng-click="addSeries()">Add Series</button>
-            </div>
-            <div class="col-md-1"></div>
-          </div>
-
-          <div class="row cnstMargin">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
-              <button type="button" class="btn btn-warning btn-block" ng-click="removeSeries()">Remove Series</button>
-            </div>
-            <div class="col-md-1"></div>
-          </div>
-          
-          <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
-              <button type="button" class="btn btn-danger btn-block" ng-click="resetSeries()">Reset Series</button>
-            </div>
-            <div class="col-md-1"></div>
-          </div>
-
+      <wrapper max="10" min="1">
+        <div class="input-group">
+          <span class="input-group-addon">Name</span>
+          <input type="text" class="form-control" ng-model="seriesName">
         </div>
-      </div>      
-    </div>
+      </wrapper>
+
+      <wrapper max="10" min="1">
+        <div class="input-group">
+          <span class="input-group-addon">Color</span>
+          <input class="color form-control" ng-model="seriesColor">
+        </div>
+      </wrapper>
+
+      <wrapper max="10" min="1">
+        <button type="button" class="btn btn-success btn-block" ng-click="addSeries()">Add Series</button>
+      </wrapper>
+
+      <wrapper max="10" min="1">
+        <button type="button" class="btn btn-warning btn-block" ng-click="removeSeries()">Remove Series</button>
+      </wrapper>
+
+      <wrapper max="10" min="1">
+        <button type="button" class="btn btn-danger btn-block" ng-click="resetSeries()">Reset Series</button>
+      </wrapper>
+
+    </panel>
 
     <!--Legend-->
-    <div class="col-md-6">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h4 class="center panel-title">
-            Legend
-          </h4>
-        </div>              
-        <div class="panel-body">          
+    <panel size="6" title="Legend" ng-cloak>         
 
           <wrapper max="10" min="1">
             <div class="input-group">
@@ -107,65 +71,65 @@
             </div>
           </wrapper>
 
-
           <wrapper max="10" min="1">
-              <input id="ted" type="number"/>
+              <div class="col-md-6">
+                {{legendX}}
+                <input type="text" class="form-control" ng-model="legendX" ng-change="changeLegend()"/>
+              </div>
+              <div class="col-md-6">
+                <input type="number" class="form-control" ng-model="legendY" only-digits/>
+              </div>
           </wrapper>
 
-        </div>
-      </div>      
-    </div>
+    </panel>
 
   </div>
 
-  <!--Labels-->
-  <div class="row">
-    <div class="col-md-6">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h4 class="center panel-title">
-            Labels
-          </h4>
-        </div>              
-        <div class="panel-body">          
-            
-            <div class="input-group cnstMargin">
-              <span class="input-group-addon">Title</span>
-              <input type="text" class="form-control" ng-model="title" ng-keyup="changeTitle()">
-            </div>
-
-            <div class="input-group cnstMargin">
-              <span class="input-group-addon">Subtitle</span>
-              <input type="text" class="form-control" ng-model="subtitle" ng-keyup="changeSubtitle()">
-            </div>         
-        
-            <div class="input-group cnstMargin">
-              <span class="input-group-addon">x-axis</span>
-              <input type="text" class="form-control" ng-model="xAxis" ng-keyup="changeXaxis()">
-            </div>
-
-            <div class="input-group cnstMargin">
-              <span class="input-group-addon">y-axis</span>
-              <input type="text" class="form-control" ng-model="yAxis" ng-keyup="changeYaxis()">
-            </div>        
-
-        </div>
-      </div>
-
-    </div>
-
-  <!--Code-->
+  
   <div class="row">
 
-    <div class="col-md-12">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h4 class="center panel-title">
-            Code
-          </h4>
-        </div>              
-        <div class="panel-body">          
+    <!--Labels-->
+    <panel size="6" title="Labels" ng-cloak>        
             
+            <wrapper max="10" min="1">
+              <div class="input-group">
+                <span class="input-group-addon">Title</span>
+                <input type="text" class="form-control" ng-model="title" ng-keyup="changeTitle()">
+              </div>
+            </wrapper>
+            
+            <wrapper max="10" min="1">
+              <div class="input-group">
+                <span class="input-group-addon">Subtitle</span>
+                <input type="text" class="form-control" ng-model="subtitle" ng-keyup="changeSubtitle()">
+              </div>
+            </wrapper>       
+            
+            <wrapper max="10" min="1">
+              <div class="input-group">
+                <span class="input-group-addon">x-axis</span>
+                <input type="text" class="form-control" ng-model="xAxis" ng-keyup="changeXaxis()">
+              </div>
+            </wrapper>  
+            
+            <wrapper max="10" min="1">
+              <div class="input-group cnstMargin">
+                <span class="input-group-addon">y-axis</span>
+                <input type="text" class="form-control" ng-model="yAxis" ng-keyup="changeYaxis()">
+              </div>
+            </wrapper>        
+
+    </panel>
+
+  </div>
+
+  
+  <div class="row">
+    
+    <!--Code-->
+    <panel size="6" title="Code">        
+            
+            <wrapper max="10" min="1">
             <code hljs class="json">
 options: {
   chart: {
@@ -193,10 +157,8 @@ legend: {
 
 loading: false
 }
-            </code>    
+            </code>
+            </wrapper>    
 
-        </div>
-      </div>
-    
-  </div>      
+   </panel>     
   </div>

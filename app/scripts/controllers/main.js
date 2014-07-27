@@ -32,6 +32,7 @@ angular.module('highChartDesignerApp')
 	$scope.legendVerticalAlign = $scope.verticalPositions[2];
 	$scope.legendLayout = $scope.layout[0];
     $scope.legendX = 0;
+    $scope.legendY = 0;
 
 	$scope.chartConfig = {
         options: {
@@ -111,9 +112,12 @@ angular.module('highChartDesignerApp')
     	$scope.chartConfig.options.legend.align = $scope.legendAlign;
     	$scope.chartConfig.options.legend.verticalAlign = $scope.legendVerticalAlign;
     	$scope.chartConfig.options.legend.layout = $scope.legendLayout;
+        //$scope.chartConfig.options.legend.x = $scope.legendX;
+        console.log($scope.legendX);
     };
 
-    angular.element('#ted').stepper();
+    angular.element('input[type=\'number\']').stepper();
+
   })
   .directive('postRender', [ '$timeout', function($timeout) {
 		var def = {
@@ -130,8 +134,8 @@ angular.module('highChartDesignerApp')
         var def = {
             restrict : 'A',
             link : function(element) {
-                element.stepper();
-                //console.log(element);
+                //element.stepper();
+                console.log(element);
             }
         };
     return def;
@@ -145,15 +149,59 @@ angular.module('highChartDesignerApp')
                 max: '=',
                 min: '='
             },
-            template: '<div class=\'row cnstMargin\'>' +
-                        '<div class=\'col-md-{{min}}\'></div>' +
-                            '<div class=\'col-md-{{max}}\' ng-transclude></div>' +
-                        '<div class=\'col-md-{{min}}\'></div>' +
-                      '</div>',
+            templateUrl: 'views/partials/columnWrapper.html',
             link: function(scope) {
                 console.log(scope.max, scope.min);
             }
 
         };
     return def;
-  });
+  })
+  .directive('panel', function(){
+        var def = {
+            restrict: 'E',
+            replace: true,
+            transclude: true,
+            scope : {
+                size: '=',
+                title: '@'                
+            },
+            templateUrl: 'views/partials/panelWrapper.html',
+            link: function(scope) {
+                console.log(scope.size, scope.title);
+            }
+
+        };
+    return def;
+    })
+  .directive('onlyDigits', function () {
+
+    //http://jlevyuk.blogspot.ca/2013/08/restrict-input-to-numbers-only-in.html
+    return {
+        restrict: 'A',
+        link: function (scope, element) {
+            angular.element(element).on('keydown', function (event) {
+                var key = event.which || event.keyCode;
+               
+                if (!event.shiftKey && !event.altKey && !event.ctrlKey &&
+                    // numbers  
+                    key >= 48 && key <= 57 ||
+                    // Numeric keypad
+                    key >= 96 && key <= 105 ||
+                    // Backspace and Tab and Enter
+                   key === 8 || key === 9 || key === 13 ||
+                    // Home and End
+                   key === 35 || key === 36 ||
+                    // left and right arrows
+                   key === 37 || key === 39 ||
+                    // Del and Ins
+                   key === 46 || key === 45)
+                {
+                    return true;
+                }
+
+                return false;
+            });
+        }
+    };
+});
