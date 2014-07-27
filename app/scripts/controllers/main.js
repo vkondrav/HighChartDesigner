@@ -31,6 +31,7 @@ angular.module('highChartDesignerApp')
 	$scope.legendAlign = $scope.positions[0];
 	$scope.legendVerticalAlign = $scope.verticalPositions[2];
 	$scope.legendLayout = $scope.layout[0];
+    $scope.legendX = 0;
 
 	$scope.chartConfig = {
         options: {
@@ -112,12 +113,7 @@ angular.module('highChartDesignerApp')
     	$scope.chartConfig.options.legend.layout = $scope.legendLayout;
     };
 
-    //$scope.applySelecter();
-
-    $scope.applyHighlight = function(){
-    	hljs.initHighlightingOnLoad();
-    };
-
+    angular.element('#ted').stepper();
   })
   .directive('postRender', [ '$timeout', function($timeout) {
 		var def = {
@@ -129,4 +125,35 @@ angular.module('highChartDesignerApp')
 		    }
 		};
 	return def;
-  }]);
+  }])
+  .directive('myStepper', [function(){
+        var def = {
+            restrict : 'A',
+            link : function(element) {
+                element.stepper();
+                //console.log(element);
+            }
+        };
+    return def;
+  }])
+  .directive('wrapper', function(){
+        var def = {
+            restrict: 'E',
+            replace: true,
+            transclude: true,
+            scope : {
+                max: '=',
+                min: '='
+            },
+            template: '<div class=\'row cnstMargin\'>' +
+                        '<div class=\'col-md-{{min}}\'></div>' +
+                            '<div class=\'col-md-{{max}}\' ng-transclude></div>' +
+                        '<div class=\'col-md-{{min}}\'></div>' +
+                      '</div>',
+            link: function(scope) {
+                console.log(scope.max, scope.min);
+            }
+
+        };
+    return def;
+  });

@@ -80,33 +80,37 @@
             Legend
           </h4>
         </div>              
-        <div class="panel-body">
-          
-          <div class="row cnstMargin">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
+        <div class="panel-body">          
 
-              <div class="input-group cnstMargin">
-                <span class="input-group-addon">Horizontal Align</span>           
-                <select ng-model="legendAlign" ng-options='item for item in positions' class="form-control" ng-change="changeLegend()">
-                </select>
-              </div>
-
-              <div class="input-group cnstMargin">
-                <span class="input-group-addon">Vertical Align</span>           
-                <select ng-model="legendVerticalAlign" ng-options='item for item in verticalPositions' class="form-control" ng-change="changeLegend()">
-                </select>
-              </div>
-
-              <div class="input-group">
-                <span class="input-group-addon">Layout</span>           
-                <select ng-model="legendLayout" ng-options='item for item in layout' class="form-control" ng-change="changeLegend()">
-                </select>
-              </div>
-
+          <wrapper max="10" min="1">
+            <div class="input-group">
+              <span class="input-group-addon">Horizontal Align</span>           
+              <select ng-model="legendAlign" ng-options='item for item in positions' class="form-control" ng-change="changeLegend()">
+              </select>
             </div>
-            <div class="col-md-1"></div>
-          </div>
+          </wrapper>
+       
+          <wrapper max="10" min="1">
+            <div class="input-group">
+              <span class="input-group-addon">Vertical Align</span>           
+              <select ng-model="legendVerticalAlign" ng-options='item for item in verticalPositions' class="form-control" ng-change="changeLegend()">
+              </select>
+            </div>
+          </wrapper>
+
+          
+          <wrapper max="10" min="1">
+            <div class="input-group cnstMargin">
+              <span class="input-group-addon">Layout</span>           
+              <select ng-model="legendLayout" ng-options='item for item in layout' class="form-control" ng-change="changeLegend()">
+              </select>
+            </div>
+          </wrapper>
+
+
+          <wrapper max="10" min="1">
+              <input id="ted" type="number"/>
+          </wrapper>
 
         </div>
       </div>      
