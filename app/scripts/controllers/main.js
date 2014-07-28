@@ -19,20 +19,32 @@ function getRandomColor() {
 angular.module('highChartDesignerApp')
   .controller('MainCtrl', function ($scope) {
 
-	$scope.title = 'Title';
-	$scope.xAxis = 'x-axis';
-	$scope.yAxis = 'y-axis';
-	$scope.subtitle = 'subtitle';
-	$scope.seriesName = 'series name';
-	$scope.seriesColor = getRandomColor();
-	$scope.positions = ['center', 'right', 'left'];
-	$scope.verticalPositions = ['top','middle', 'bottom'];
-	$scope.layout = ['horizontal', 'vertical'];
-	$scope.legendAlign = $scope.positions[0];
-	$scope.legendVerticalAlign = $scope.verticalPositions[2];
-	$scope.legendLayout = $scope.layout[0];
-    $scope.legendX = 0;
-    $scope.legendY = 0;
+    $scope.positions = {
+        horizontal: ['center', 'right', 'left'],
+        vertical: ['top','middle', 'bottom'],
+        align: ['horizontal', 'vertical']
+    };
+
+	$scope.label = {
+        title: 'Title',
+        subtitle: 'subtitle',
+        xAxis: 'x-axis',
+        yAxis: 'y-axis'
+    };
+
+	$scope.series = {
+        name: 'series name',
+        color: getRandomColor()
+    };
+
+    $scope.legend = {
+        title: 'legend title',
+        horizontalPosition:$scope.positions.horizontal[0],
+        verticalPosition: $scope.positions.vertical[2],
+        layout: $scope.positions.align[0],
+        x: 0,
+        y: 0
+    };
 
 	$scope.chartConfig = {
         options: {
@@ -40,23 +52,30 @@ angular.module('highChartDesignerApp')
                 type: 'bar'
             },
             title: {
-            	text: $scope.title
+            	text: $scope.label.title
         	},
             subtitle: {
-                text: 'Subtitle'
+                text: $scope.label.subtitle
             },
             xAxis: {
         		title: {
-        			text: $scope.xAxis
+        			text: $scope.label.xAxis
         		}
         	},
         	yAxis: {
         		title: {
-        			text: $scope.yAxis
+        			text: $scope.label.yAxis
         		}
         	},
         	legend: {
-        		align: 'center'
+                title: {
+                    text: $scope.legend.title
+                },
+        		align: $scope.legend.horizontalPosition,
+                verticalAlign: $scope.legend.verticalPosition,
+                layout: $scope.legend.layout,
+                x: $scope.legend.x,
+                y: $scope.legend.y
         	},
 
         	loading: false
@@ -64,21 +83,19 @@ angular.module('highChartDesignerApp')
         series: []        
     };
 
-    $scope.changeTitle = function(){
-    	$scope.chartConfig.options.title.text = $scope.title;
+    $scope.change = function(){
+    	$scope.chartConfig.options.title.text = $scope.label.title;
+        $scope.chartConfig.options.xAxis.title.text = $scope.label.xAxis;
+        $scope.chartConfig.options.yAxis.title.text = $scope.label.yAxis;
+        $scope.chartConfig.options.subtitle.text = $scope.label.subtitle;
+        $scope.chartConfig.options.legend.align = $scope.legend.horizontalPosition;
+        $scope.chartConfig.options.legend.verticalAlign = $scope.legend.verticalPosition;
+        $scope.chartConfig.options.legend.layout = $scope.legend.layout;
+        $scope.chartConfig.options.legend.x = $scope.legend.x;
+        $scope.chartConfig.options.legend.y = $scope.legend.y;
+        $scope.chartConfig.options.legend.title.text = $scope.legend.title;
     };
 
-    $scope.changeXaxis = function(){
-    	$scope.chartConfig.options.xAxis.title.text = $scope.xAxis;
-    };
-
-    $scope.changeYaxis = function(){
-    	$scope.chartConfig.options.yAxis.title.text = $scope.yAxis;
-    };
-
-    $scope.changeSubtitle = function(){
-    	$scope.chartConfig.options.subtitle.text = $scope.subtitle;
-    };
 
     $scope.addSeries = function () {
 
@@ -87,12 +104,12 @@ angular.module('highChartDesignerApp')
             rnd.push(Math.floor(Math.random() * 100) + 1);
         }
         $scope.chartConfig.series.push({
-        	name: $scope.seriesName,
-        	color: $scope.seriesColor,
+        	name: $scope.series.name,
+        	color: $scope.series.color,
             data: rnd
         });
 
-        $scope.seriesColor = getRandomColor();
+        $scope.series.color = getRandomColor();
 
     };
 
@@ -108,15 +125,7 @@ angular.module('highChartDesignerApp')
     	angular.element('select').selecter();
     };
 
-    $scope.changeLegend = function(){
-    	$scope.chartConfig.options.legend.align = $scope.legendAlign;
-    	$scope.chartConfig.options.legend.verticalAlign = $scope.legendVerticalAlign;
-    	$scope.chartConfig.options.legend.layout = $scope.legendLayout;
-        //$scope.chartConfig.options.legend.x = $scope.legendX;
-        console.log($scope.legendX);
-    };
-
-    angular.element('input[type=\'number\']').stepper();
+    //angular.element('input[type=\'number\']').stepper();
 
   })
   .directive('postRender', [ '$timeout', function($timeout) {
@@ -195,12 +204,40 @@ angular.module('highChartDesignerApp')
                     // left and right arrows
                    key === 37 || key === 39 ||
                     // Del and Ins
-                   key === 46 || key === 45)
+                   key === 46 || key === 45 ||
+
+                   key === 109 || key === 189)
                 {
                     return true;
                 }
 
                 return false;
+            });
+        }
+    };
+  })
+.directive('isNumber', function () {
+    return {
+        restrict: 'A',
+        template: '<input ng-model="inputValue" />',
+        scope: {
+            inputValue: '='
+        },
+        link: function (scope) {
+            scope.$watch('inputValue', function(newValue,oldValue) {
+                var arr = String(newValue).split('');
+                if (arr.length === 0) {
+                    return;
+                }
+                if (arr.length === 1 && (arr[0] === '-' || arr[0] === '.' )) {
+                    return;
+                }
+                if (arr.length === 2 && newValue === '-.') {
+                    return;  
+                } 
+                if (isNaN(newValue)) {
+                    scope.inputValue = oldValue;
+                }
             });
         }
     };

@@ -18,14 +18,14 @@
       <wrapper max="10" min="1">
         <div class="input-group">
           <span class="input-group-addon">Name</span>
-          <input type="text" class="form-control" ng-model="seriesName">
+          <input type="text" class="form-control" ng-model="series.name">
         </div>
       </wrapper>
 
       <wrapper max="10" min="1">
         <div class="input-group">
           <span class="input-group-addon">Color</span>
-          <input class="color form-control" ng-model="seriesColor">
+          <input class="form-control color" ng-model="series.color">
         </div>
       </wrapper>
 
@@ -45,11 +45,16 @@
 
     <!--Legend-->
     <panel size="6" title="Legend" ng-cloak>         
-
+          <wrapper max="10" min="1">
+            <div class="input-group">
+              <span class="input-group-addon">Title</span>
+              <input type="text" class="form-control" ng-model="legend.title" ng-keyup="change()">
+            </div>
+          </wrapper>
           <wrapper max="10" min="1">
             <div class="input-group">
               <span class="input-group-addon">Horizontal Align</span>           
-              <select ng-model="legendAlign" ng-options='item for item in positions' class="form-control" ng-change="changeLegend()">
+              <select ng-model="legend.horizontalPosition" ng-options='item for item in positions.horizontal' class="form-control" ng-change="change()">
               </select>
             </div>
           </wrapper>
@@ -57,7 +62,7 @@
           <wrapper max="10" min="1">
             <div class="input-group">
               <span class="input-group-addon">Vertical Align</span>           
-              <select ng-model="legendVerticalAlign" ng-options='item for item in verticalPositions' class="form-control" ng-change="changeLegend()">
+              <select ng-model="legend.verticalPosition" ng-options='item for item in positions.vertical' class="form-control" ng-change="change()">
               </select>
             </div>
           </wrapper>
@@ -66,18 +71,23 @@
           <wrapper max="10" min="1">
             <div class="input-group cnstMargin">
               <span class="input-group-addon">Layout</span>           
-              <select ng-model="legendLayout" ng-options='item for item in layout' class="form-control" ng-change="changeLegend()">
+              <select ng-model="legend.layout" ng-options='item for item in positions.align' class="form-control" ng-change="change()">
               </select>
             </div>
           </wrapper>
 
           <wrapper max="10" min="1">
               <div class="col-md-6">
-                {{legendX}}
-                <input type="text" class="form-control" ng-model="legendX" ng-change="changeLegend()"/>
+                <div class="input-group">
+                  <span class="input-group-addon">x</span>
+                  <input type="number" class="form-control" ng-model="legend.x" only-digits ng-change="change()" step="5"/>
+                </div>
               </div>
               <div class="col-md-6">
-                <input type="number" class="form-control" ng-model="legendY" only-digits/>
+                <div class="input-group">
+                  <span class="input-group-addon">y</span>
+                  <input type="number" class="form-control" ng-model="legend.y" only-digits ng-change="change()" step="5"/>
+                </div>
               </div>
           </wrapper>
 
@@ -93,29 +103,29 @@
             
             <wrapper max="10" min="1">
               <div class="input-group">
-                <span class="input-group-addon">Title</span>
-                <input type="text" class="form-control" ng-model="title" ng-keyup="changeTitle()">
+                <span class="input-group-addon">Main Title</span>
+                <input type="text" class="form-control" ng-model="label.title" ng-keyup="change()">
               </div>
             </wrapper>
             
             <wrapper max="10" min="1">
               <div class="input-group">
                 <span class="input-group-addon">Subtitle</span>
-                <input type="text" class="form-control" ng-model="subtitle" ng-keyup="changeSubtitle()">
+                <input type="text" class="form-control" ng-model="label.subtitle" ng-keyup="change()">
               </div>
             </wrapper>       
             
             <wrapper max="10" min="1">
               <div class="input-group">
                 <span class="input-group-addon">x-axis</span>
-                <input type="text" class="form-control" ng-model="xAxis" ng-keyup="changeXaxis()">
+                <input type="text" class="form-control" ng-model="label.xAxis" ng-keyup="change()">
               </div>
             </wrapper>  
             
             <wrapper max="10" min="1">
               <div class="input-group cnstMargin">
                 <span class="input-group-addon">y-axis</span>
-                <input type="text" class="form-control" ng-model="yAxis" ng-keyup="changeYaxis()">
+                <input type="text" class="form-control" ng-model="label.yAxis" ng-keyup="change()">
               </div>
             </wrapper>        
 
