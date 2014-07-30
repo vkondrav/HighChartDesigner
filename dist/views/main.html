@@ -1,0 +1,183 @@
+<div class="container documents">
+
+  <div class="row"> 
+    <div class="col-md-12">      
+      <div class="panel panel-primary">              
+        <div class="panel-body">
+          <highchart id="canvas" class="col-md-12" height = '500px;' config="chartConfig"></highchart>    
+        </div>
+      </div>
+    </div>           
+  </div>
+
+  <wrapper max="6" min="3">
+      <button type="button" class="btn btn-info btn-block" ng-click="change()">
+        <h4 class="center panel-title">Render and Generate Code</h4>
+      </button>
+  </wrapper>
+  
+  
+  <div class="row">
+    <!--Series-->
+    <panel size="12" title="Series" ng-cloak>
+    
+    <div class="col-md-4">      
+      <wrapper max="10" min="1">
+        <div class="input-group">
+          <span class="input-group-addon">Name</span>
+          <input type="text" class="form-control" ng-model="series.name">
+        </div>
+      </wrapper>
+
+      <wrapper max="10" min="1">
+        <div class="input-group">
+          <span class="input-group-addon">Color</span>
+          <input class="form-control" ng-model="series.color">
+        </div>
+      </wrapper>     
+    </div>
+
+    <div class="col-md-4">
+      <wrapper max="10" min="1">
+        <button type="button" class="btn btn-danger btn-block" ng-click="resetSeries()">Reset Series</button>
+      </wrapper>
+
+      <wrapper max="10" min="1">
+        <button type="button" class="btn btn-success btn-block" ng-click="addSeries()">Add Series</button>
+      </wrapper>
+
+      <wrapper max="10" min="1">
+        <button type="button" class="btn btn-warning btn-block" ng-click="removeSeries()">Remove Series</button>
+      </wrapper>
+    </div>
+
+    <div class="col-md-4">
+      <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Type</span>           
+            <select ng-model="chart.type" ng-options='item for item in positions.chartTypes' class="form-control">
+            </select>
+          </div>
+        </wrapper>
+    </div>
+
+    </panel>
+
+  </div>
+
+  <div class="row">
+    <!--Legend-->
+    <panel size="12" title="Legend" ng-cloak>
+      
+      <div class="col-md-4">
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Title</span>
+            <input type="text" class="form-control" ng-model="legend.title">
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Horizontal Align</span>           
+            <select ng-model="legend.horizontalPosition" ng-options='item for item in positions.horizontal' class="form-control">
+            </select>
+          </div>
+        </wrapper>
+     
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Vertical Align</span>           
+            <select ng-model="legend.verticalPosition" ng-options='item for item in positions.vertical' class="form-control">
+            </select>
+          </div>
+        </wrapper>
+            
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Layout</span>           
+            <select ng-model="legend.layout" ng-options='item for item in positions.align' class="form-control">
+            </select>
+          </div>
+        </wrapper>
+      </div>
+      
+      <div class="col-md-4">
+        <wrapper max="10" min="1">              
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-info" ng-click="changeVariable(5, false, 'x')">x-</button>
+              </div>
+              <input type="text" class="form-control center" ng-model="legend.x" only-digits/>
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-info" ng-click="changeVariable(5, true, 'x')">x+</button>
+              </div>
+            </div>              
+        </wrapper>
+
+        <wrapper max="10" min="1">              
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-info" ng-click="changeVariable(5, false, 'y')">y-</button>
+              </div>
+              <input type="text" class="form-control center" ng-model="legend.y" only-digits/>
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-info" ng-click="changeVariable(5, true, 'y')">y+</button>
+              </div>
+            </div>              
+        </wrapper>
+      </div>
+
+    </panel>
+  </div>
+
+  <div class="row">
+  <!--Labels-->
+    <panel size="12" title="Labels" ng-cloak>        
+      
+      <div class="col-md-4">
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Main Title</span>
+            <input type="text" class="form-control" ng-model="label.title">
+          </div>
+        </wrapper>
+        
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Subtitle</span>
+            <input type="text" class="form-control" ng-model="label.subtitle">
+          </div>
+        </wrapper>       
+        
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">x-axis</span>
+            <input type="text" class="form-control" ng-model="label.xAxis">
+          </div>
+        </wrapper>  
+        
+        <wrapper max="10" min="1">
+          <div class="input-group cnstMargin">
+            <span class="input-group-addon">y-axis</span>
+            <input type="text" class="form-control" ng-model="label.yAxis">
+          </div>
+        </wrapper> 
+
+      </div>
+    </panel>
+  </div>
+
+  
+  <div class="row">
+    
+    <!--Code-->
+    <panel size="12" title="Code">        
+            
+      <wrapper max="10" min="1">
+        <code hljs class="json" source="json.output">
+        </code>
+      </wrapper>    
+
+   </panel>     
+  </div>

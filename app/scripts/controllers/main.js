@@ -217,7 +217,7 @@ angular.module('highChartDesignerApp')
   .directive('wrapper', function(){
         var def = {
             restrict: 'E',
-            replace: true,
+            //replace: true,
             transclude: true,
             scope : {
                 max: '=',
@@ -234,7 +234,7 @@ angular.module('highChartDesignerApp')
   .directive('panel', function(){
         var def = {
             restrict: 'E',
-            replace: true,
+            //replace: true,
             transclude: true,
             scope : {
                 size: '=',
