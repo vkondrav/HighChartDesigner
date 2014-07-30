@@ -49,7 +49,8 @@ angular.module('highChartDesignerApp')
 	$scope.chartConfig = {
         options: {
             chart: {
-                type: 'bar'
+                type: 'bar',
+                animation: false
             },
             title: {
             	text: $scope.label.title
@@ -91,11 +92,10 @@ angular.module('highChartDesignerApp')
         $scope.chartConfig.options.legend.align = $scope.legend.horizontalPosition;
         $scope.chartConfig.options.legend.verticalAlign = $scope.legend.verticalPosition;
         $scope.chartConfig.options.legend.layout = $scope.legend.layout;
-        $scope.chartConfig.options.legend.x = $scope.legend.x;
+        $scope.chartConfig.options.legend.x = parseInt($scope.legend.x);
         $scope.chartConfig.options.legend.y = $scope.legend.y;
         $scope.chartConfig.options.legend.title.text = $scope.legend.title;
     };
-
 
     $scope.addSeries = function () {
 
@@ -125,8 +125,16 @@ angular.module('highChartDesignerApp')
     	angular.element('select').selecter();
     };
 
-    //angular.element('input[type=\'number\']').stepper();
+    $scope.changeVariable = function(incr, add, model){
+        if(add){
+            $scope.legend[model] = $scope.legend[model] + incr;
+        }else{
+            $scope.legend[model] = $scope.legend[model] - incr;
+        }
+        $scope.change();
+    };
 
+    //angular.element('input[type=\'number\']').stepper();
   })
   .directive('postRender', [ '$timeout', function($timeout) {
 		var def = {
@@ -173,10 +181,22 @@ angular.module('highChartDesignerApp')
             transclude: true,
             scope : {
                 size: '=',
-                title: '@'                
+                title: '@'                               
             },
             templateUrl: 'views/partials/panelWrapper.html',
             link: function(scope) {
+                scope['panel-' + scope.title] = true;
+
+                //slide control
+                scope.slideDown = function(id){
+                    if(scope[id]){
+                        angular.element('#' + id).slideDown();
+                        scope[id] = false;
+                    }else{
+                        angular.element('#' + id).slideUp();
+                        scope[id] = true;
+                    }
+                };
                 console.log(scope.size, scope.title);
             }
 
@@ -241,4 +261,24 @@ angular.module('highChartDesignerApp')
             });
         }
     };
+})
+.directive('colorPicker', function(){
+  return {
+    restrict: 'A',
+    require: '?ngModel',
+    link: function (scope, elem, attrs, ngModel) {
+      //elem.
+      if (!ngModel) {
+        return;
+      }
+      ngModel.$render = function () {
+        //elem.spectrum('set', ngModel.$viewValue || '#fff');
+      };
+      elem.on('change', function () {
+        scope.$apply(function () {
+          ngModel.$setViewValue(elem.val());
+        });
+      });
+    }
+  };
 });

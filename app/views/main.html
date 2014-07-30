@@ -1,5 +1,5 @@
 <div class="container documents">
-  <div class="row"> 
+  <div class="row topChart"> 
     <div class="col-md-12">      
       <div class="panel panel-primary">              
         <div class="panel-body">
@@ -11,9 +11,8 @@
   
   
   <div class="row">
-
     <!--Series-->
-    <panel size="6" title="Series" ng-cloak>
+    <panel size="4" title="Series" ng-cloak>
           
       <wrapper max="10" min="1">
         <div class="input-group">
@@ -25,7 +24,7 @@
       <wrapper max="10" min="1">
         <div class="input-group">
           <span class="input-group-addon">Color</span>
-          <input class="form-control color" ng-model="series.color">
+          <input class="form-control" ng-model="series.color" color-picker>
         </div>
       </wrapper>
 
@@ -44,7 +43,7 @@
     </panel>
 
     <!--Legend-->
-    <panel size="6" title="Legend" ng-cloak>         
+    <panel size="4" title="Legend" ng-cloak>         
           <wrapper max="10" min="1">
             <div class="input-group">
               <span class="input-group-addon">Title</span>
@@ -69,37 +68,41 @@
 
           
           <wrapper max="10" min="1">
-            <div class="input-group cnstMargin">
+            <div class="input-group">
               <span class="input-group-addon">Layout</span>           
               <select ng-model="legend.layout" ng-options='item for item in positions.align' class="form-control" ng-change="change()">
               </select>
             </div>
           </wrapper>
 
-          <wrapper max="10" min="1">
-              <div class="col-md-6">
-                <div class="input-group">
-                  <span class="input-group-addon">x</span>
-                  <input type="number" class="form-control" ng-model="legend.x" only-digits ng-change="change()" step="5"/>
+          <wrapper max="10" min="1">              
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-primary" ng-click="changeVariable(5, false, 'x')">x-</button>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <div class="input-group">
-                  <span class="input-group-addon">y</span>
-                  <input type="number" class="form-control" ng-model="legend.y" only-digits ng-change="change()" step="5"/>
+                <input type="text" class="form-control center" ng-model="legend.x" only-digits ng-change="change()"/>
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-primary" ng-click="changeVariable(5, true, 'x')">x+</button>
                 </div>
-              </div>
+              </div>              
+          </wrapper>
+
+          <wrapper max="10" min="1">              
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-primary" ng-click="changeVariable(5, false, 'y')">y-</button>
+                </div>
+                <input type="text" class="form-control center" ng-model="legend.y" only-digits ng-change="change()"/>
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-primary" ng-click="changeVariable(5, true, 'y')">y+</button>
+                </div>
+              </div>              
           </wrapper>
 
     </panel>
 
-  </div>
-
-  
-  <div class="row">
-
     <!--Labels-->
-    <panel size="6" title="Labels" ng-cloak>        
+    <panel size="4" title="Labels" ng-cloak>        
             
             <wrapper max="10" min="1">
               <div class="input-group">
