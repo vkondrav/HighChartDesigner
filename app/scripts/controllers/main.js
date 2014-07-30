@@ -33,8 +33,11 @@ angular.module('highChartDesignerApp')
     };
 
 	$scope.series = {
-        name: 'series name',
-        color: getRandomColor()
+        name: 'series',
+        color: getRandomColor(),
+        last: '',
+        counter: 1,
+        added: false
     };
 
     $scope.legend = {
@@ -103,6 +106,20 @@ angular.module('highChartDesignerApp')
         for (var i = 0; i < 10; i++) {
             rnd.push(Math.floor(Math.random() * 100) + 1);
         }
+        if($scope.series.name === $scope.series.last){
+            if($scope.series.added){
+                $scope.series.name = $scope.series.name.slice(0, -1) + $scope.series.counter;
+            }else{
+                $scope.series.name = $scope.series.name + $scope.series.counter;
+            }
+            $scope.series.last = $scope.series.name;
+            $scope.series.counter += 1;
+            $scope.series.added = true;
+        }else{
+            $scope.series.added = false;
+            $scope.series.last = $scope.series.name;
+            $scope.series.counter = 1;
+        }
         $scope.chartConfig.series.push({
         	name: $scope.series.name,
         	color: $scope.series.color,
@@ -115,10 +132,16 @@ angular.module('highChartDesignerApp')
 
     $scope.removeSeries = function () {
         $scope.chartConfig.series.pop();
+
+        if($scope.series.added){
+            $scope.series.counter -= 1;
+        }
     };
 
     $scope.resetSeries = function(){
     	$scope.chartConfig.series = [];
+        $scope.series.name = 'series';
+        $scope.series.counter = 1;
     };
 
     $scope.applySelecter = function(){
@@ -131,7 +154,15 @@ angular.module('highChartDesignerApp')
         }else{
             $scope.legend[model] = $scope.legend[model] - incr;
         }
-        $scope.change();
+    };
+
+    $scope.randomColor = function getRandomColor() {
+        var letters = '0123456789ABCDEF'.split('');
+        var color = '#';
+        for (var i = 0; i < 6; i++ ) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
     };
 
     //angular.element('input[type=\'number\']').stepper();

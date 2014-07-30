@@ -1,8 +1,8 @@
 <div class="col-md-{{size}}">
-	<div class="panel panel-primary" ng-click="slideDown('panel-{{title}}')">
-		<div class="panel-heading">
+	<div class="panel panel-primary">
+		<button type="button" class="btn btn-primary btn-block" ng-click="slideDown('panel-{{title}}')">
 			<h4 class="center panel-title">{{title}}</h4>
-		</div>              
+		</button>              
 		<div id="panel-{{title}}" class="panel-body panel-collapse collapse" ng-transclude>
 			<!--This will be wrapped around -->
 		</div>
