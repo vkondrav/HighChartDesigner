@@ -9,6 +9,24 @@ function getRandomColor() {
     return color;
 }
 
+function replacer(key, value){
+    //console.log(key);
+    if (key === 'data'){
+        return undefined;
+    }else{
+        return value;
+    }
+}
+
+function getRandomData(n, min, max){
+    var rnd = [];
+    for (var i = 0; i < n; i++) {
+        rnd.push(Math.floor(Math.random() * max) + min);
+    }
+
+    return rnd;
+}
+
 /**
  * @ngdoc function
  * @name highChartDesignerApp.controller:MainCtrl
@@ -22,7 +40,14 @@ angular.module('highChartDesignerApp')
     $scope.positions = {
         horizontal: ['center', 'right', 'left'],
         vertical: ['top','middle', 'bottom'],
-        align: ['horizontal', 'vertical']
+        align: ['horizontal', 'vertical'],
+        chartTypes: ['bar', 
+                     'line',
+                     'area',
+                     'areaspline',
+                     'bubble',
+                     'column',
+                     'spline']
     };
 
 	$scope.label = {
@@ -35,7 +60,7 @@ angular.module('highChartDesignerApp')
 	$scope.series = {
         name: 'series',
         color: getRandomColor(),
-        last: '',
+        last: 'series',
         counter: 1,
         added: false
     };
@@ -49,11 +74,16 @@ angular.module('highChartDesignerApp')
         y: 0
     };
 
+    $scope.chart = {
+        type: $scope.positions.chartTypes[0],
+        animation: true
+    };
+
 	$scope.chartConfig = {
         options: {
             chart: {
-                type: 'bar',
-                animation: false
+                type: $scope.chart.type,
+                animation: $scope.chart.animation
             },
             title: {
             	text: $scope.label.title
@@ -80,14 +110,21 @@ angular.module('highChartDesignerApp')
                 layout: $scope.legend.layout,
                 x: $scope.legend.x,
                 y: $scope.legend.y
-        	},
-
-        	loading: false
+        	}
         },
-        series: []        
+        series: [{
+            name: 'series',
+            data: getRandomData(10,20,100),
+            color: getRandomColor()
+        }]        
+    };
+
+    $scope.json = {
+        output: JSON.stringify($scope.chartConfig, replacer, ' ')
     };
 
     $scope.change = function(){
+        $scope.chartConfig.options.chart.type = $scope.chart.type;
     	$scope.chartConfig.options.title.text = $scope.label.title;
         $scope.chartConfig.options.xAxis.title.text = $scope.label.xAxis;
         $scope.chartConfig.options.yAxis.title.text = $scope.label.yAxis;
@@ -98,14 +135,13 @@ angular.module('highChartDesignerApp')
         $scope.chartConfig.options.legend.x = parseInt($scope.legend.x);
         $scope.chartConfig.options.legend.y = $scope.legend.y;
         $scope.chartConfig.options.legend.title.text = $scope.legend.title;
+
+        $scope.json.output = JSON.stringify($scope.chartConfig, replacer, '\t');
     };
 
     $scope.addSeries = function () {
 
-        var rnd = [];
-        for (var i = 0; i < 10; i++) {
-            rnd.push(Math.floor(Math.random() * 100) + 1);
-        }
+        
         if($scope.series.name === $scope.series.last){
             if($scope.series.added){
                 $scope.series.name = $scope.series.name.slice(0, -1) + $scope.series.counter;
@@ -123,7 +159,7 @@ angular.module('highChartDesignerApp')
         $scope.chartConfig.series.push({
         	name: $scope.series.name,
         	color: $scope.series.color,
-            data: rnd
+            data: getRandomData(10, 20, 100)
         });
 
         $scope.series.color = getRandomColor();
@@ -133,7 +169,7 @@ angular.module('highChartDesignerApp')
     $scope.removeSeries = function () {
         $scope.chartConfig.series.pop();
 
-        if($scope.series.added){
+        if($scope.series.added && $scope.series.counter > 0){
             $scope.series.counter -= 1;
         }
     };
@@ -156,16 +192,6 @@ angular.module('highChartDesignerApp')
         }
     };
 
-    $scope.randomColor = function getRandomColor() {
-        var letters = '0123456789ABCDEF'.split('');
-        var color = '#';
-        for (var i = 0; i < 6; i++ ) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    };
-
-    //angular.element('input[type=\'number\']').stepper();
   })
   .directive('postRender', [ '$timeout', function($timeout) {
 		var def = {
@@ -216,7 +242,7 @@ angular.module('highChartDesignerApp')
             },
             templateUrl: 'views/partials/panelWrapper.html',
             link: function(scope) {
-                scope['panel-' + scope.title] = true;
+                scope['panel-' + scope.title] = false;
 
                 //slide control
                 scope.slideDown = function(id){
@@ -228,7 +254,7 @@ angular.module('highChartDesignerApp')
                         scope[id] = true;
                     }
                 };
-                console.log(scope.size, scope.title);
+                //console.log(scope.size, scope.title);
             }
 
         };
