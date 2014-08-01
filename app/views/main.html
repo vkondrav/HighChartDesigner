@@ -15,28 +15,29 @@
         <h4 class="center panel-title">Render and Generate Code</h4>
       </button>
   </wrapper>
-  
-  
+
   <div class="row">
-    <!--Series-->
+    <!-- SERIES (PANEL 1) -->
     <panel size="12" title="Series" ng-cloak>
     
+    <!-- COLUMN 1 -->
     <div class="col-md-4">      
       <wrapper max="10" min="1">
         <div class="input-group">
           <span class="input-group-addon">Name</span>
-          <input type="text" class="form-control" ng-model="series.name">
+          <input type="text" class="form-control" ng-model="series.name" set-null>
         </div>
       </wrapper>
 
       <wrapper max="10" min="1">
         <div class="input-group">
           <span class="input-group-addon">Color</span>
-          <input class="form-control" ng-model="series.color">
+          <input class="form-control" ng-model="series.color" set-null>
         </div>
       </wrapper>     
     </div>
-
+  
+    <!-- COLUMN 1 -->
     <div class="col-md-4">
       <wrapper max="10" min="1">
         <button type="button" class="btn btn-danger btn-block" ng-click="resetSeries()">Reset Series</button>
@@ -50,16 +51,225 @@
         <button type="button" class="btn btn-warning btn-block" ng-click="removeSeries()">Remove Series</button>
       </wrapper>
     </div>
-
+    
+    <!-- COLUMN 3 -->
     <div class="col-md-4">
       <wrapper max="10" min="1">
+        <div class="input-group">
+          <span class="input-group-addon">Type</span>           
+          <select ng-model="series.type" ng-options='item for item in lists.chartTypesPlus' class="form-control">
+          </select>
+        </div>
+      </wrapper>
+
+      <wrapper max="10" min="1">
+        <div class="input-group">
+          <span class="input-group-addon">#</span>
+          <input class="form-control" ng-model="series.num" set-null>
+        </div>
+      </wrapper>
+
+      <wrapper max="10" min="1">
+        <div class="input-group">
+          <span class="input-group-addon">Min</span>
+          <input class="form-control" ng-model="series.min" set-null>
+        </div>
+      </wrapper>
+
+      <wrapper max="10" min="1">
+        <div class="input-group">
+          <span class="input-group-addon">Max</span>
+          <input class="form-control" ng-model="series.max" set-null>
+        </div>
+      </wrapper>
+
+
+    </div>
+
+    
+
+    </panel>
+
+  </div>
+  
+  <div class="row">
+    <!-- CHART (PANEL 2) -->
+    <panel size="12" title="Chart" ng-cloak>
+    
+      <!-- COULUMN 1 -->
+      <div class="col-md-4">      
+        <wrapper max="10" min="1">
           <div class="input-group">
-            <span class="input-group-addon">Type</span>           
-            <select ng-model="chart.type" ng-options='item for item in positions.chartTypes' class="form-control">
-            </select>
+            <span class="input-group-addon">Type</span>
+            <select ng-model="chart.type" ng-options='item for item in lists.chartTypes' class="form-control"></select>
           </div>
         </wrapper>
-    </div>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Animation</span>
+            <select ng-model="chart.animation" ng-options='item for item in lists.bool' class="form-control"></select>
+          </div>
+        </wrapper> 
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Background Color</span>
+            <input type="text" class="form-control" ng-model="chart.backgroundColor" set-null>
+          </div>
+        </wrapper>    
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Border Color</span>
+            <input type="text" class="form-control" ng-model="chart.borderColor" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Border Radius</span>
+            <input type="text" class="form-control" ng-model="chart.borderRadius" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Border Width</span>
+            <input type="text" class="form-control" ng-model="chart.borderWidth" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Height</span>
+            <input type="text" class="form-control" ng-model="chart.height" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Width</span>
+            <input type="text" class="form-control" ng-model="chart.width" set-null>
+          </div>
+        </wrapper>
+
+      </div>  
+
+      <!-- COLUMN 2 -->
+      <div class="col-md-4">
+        
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Ignore Hidden Series</span>
+            <select ng-model="chart.ignoreHiddenSeries" ng-options='item for item in lists.bool' class="form-control"></select>
+          </div>
+        </wrapper> 
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Inverted</span>
+            <select ng-model="chart.ignoreHiddenSeries" ng-options='item for item in lists.bool' class="form-control"></select>
+          </div>
+        </wrapper> 
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Margin Bottom</span>
+            <input type="text" class="form-control" ng-model="chart.marginBottom" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Margin Top</span>
+            <input type="text" class="form-control" ng-model="chart.marginTop" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Margin Left</span>
+            <input type="text" class="form-control" ng-model="chart.marginLeft" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Margin Right</span>
+            <input type="text" class="form-control" ng-model="chart.marginRight" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Shadow</span>
+            <select ng-model="chart.shadow" ng-options='item for item in lists.bool' class="form-control"></select>
+          </div>
+        </wrapper> 
+
+      </div>  
+
+      <!-- COLUMN 2 -->
+      <div class="col-md-4">
+        
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Plot Background Color</span>
+            <input type="text" class="form-control" ng-model="chart.plotBackgroundColor" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Plot Border Color</span>
+            <input type="text" class="form-control" ng-model="chart.plotBorderColor" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Plot Border Width</span>
+            <input type="text" class="form-control" ng-model="chart.plotBorderWidth" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Plot Shadow</span>
+            <select ng-model="chart.plotShadow" ng-options='item for item in lists.bool' class="form-control"></select>
+          </div>
+        </wrapper>
+        
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Spacing Bottom</span>
+            <input type="text" class="form-control" ng-model="chart.spacingBottom" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Spacing Top</span>
+            <input type="text" class="form-control" ng-model="chart.spacingTop" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Spacing Left</span>
+            <input type="text" class="form-control" ng-model="chart.spacingLeft" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Spacing Right</span>
+            <input type="text" class="form-control" ng-model="chart.spacingRight" set-null>
+          </div>
+        </wrapper>
+
+      </div> 
 
     </panel>
 
