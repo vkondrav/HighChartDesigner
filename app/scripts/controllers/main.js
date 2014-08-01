@@ -94,11 +94,46 @@ angular.module('highChartDesignerApp')
                      'areaspline',
                      'bubble',
                      'column',
-                     'spline']
+                     'spline'],
+        horizontal: ['center', 'right', 'left'],
+        vertical: ['top','middle', 'bottom'],
+        align: ['horizontal', 'vertical']
     };
     
     $scope.lists.chartTypesPlus = passByValue($scope.lists.chartTypes);
     $scope.lists.chartTypesPlus.push('default');
+
+    $scope.legend = {
+        align: 'center',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#909090',
+        borderRadius: 0,
+        borderWidth: 0,
+        enabled: true,
+        floating: false,
+        itemDistance: 20,
+        itemMarginBottom: 0,
+        itemMarginTop: 0,
+        itemWidth: null,
+        labelFormat: '{name}',
+        layout: 'horizontal',
+        lineHeight: 16,
+        margin: 15,
+        maxHeight: null,
+        padding: 8,
+        reversed: false,
+        rtl: false,
+        shadow: false,
+        symbolHeight: 12,
+        symbolPadding: 5,
+        symbolRadius: 5,
+        symbolWidth: 16,        
+        title: 'legend title',
+        verticalAlign: 'bottom',
+        width: null,
+        x: 0,
+        y: 0
+    };
 
     $scope.positions = {
         horizontal: ['center', 'right', 'left'],
@@ -120,15 +155,6 @@ angular.module('highChartDesignerApp')
         yAxis: 'y-axis'
     };
 
-    $scope.legend = {
-        title: 'legend title',
-        horizontalPosition:$scope.positions.horizontal[0],
-        verticalPosition: $scope.positions.vertical[2],
-        layout: $scope.positions.align[0],
-        x: 0,
-        y: 0
-    };
-
     //$scope.chart = {
     //    type: $scope.positions.chartTypes[0],
     //    animation: true
@@ -136,36 +162,8 @@ angular.module('highChartDesignerApp')
 
 	$scope.chartConfig = {
         options: {
-            chart: {
-                type: $scope.chart.type,
-                animation: $scope.chart.animation
-            },
-            title: {
-            	text: $scope.label.title
-        	},
-            subtitle: {
-                text: $scope.label.subtitle
-            },
-            xAxis: {
-        		title: {
-        			text: $scope.label.xAxis
-        		}
-        	},
-        	yAxis: {
-        		title: {
-        			text: $scope.label.yAxis
-        		}
-        	},
-        	legend: {
-                title: {
-                    text: $scope.legend.title
-                },
-        		align: $scope.legend.horizontalPosition,
-                verticalAlign: $scope.legend.verticalPosition,
-                layout: $scope.legend.layout,
-                x: $scope.legend.x,
-                y: $scope.legend.y
-        	}
+            chart: {},
+            legend: {},
         },
         series: [{
             name: 'series', 
@@ -175,26 +173,18 @@ angular.module('highChartDesignerApp')
     };
 
     $scope.json = {
-        output: JSON.stringify($scope.chartConfig, replacer, ' ')
+        output: null
     };
 
     $scope.change = function(){
         $scope.chartConfig.options.chart = passByValue($scope.chart);  
 
-        //$scope.chartConfig.options.chart.type = $scope.chart.type;
-    	$scope.chartConfig.options.title.text = $scope.label.title;
-        $scope.chartConfig.options.xAxis.title.text = $scope.label.xAxis;
-        $scope.chartConfig.options.yAxis.title.text = $scope.label.yAxis;
-        $scope.chartConfig.options.subtitle.text = $scope.label.subtitle;
-        $scope.chartConfig.options.legend.align = $scope.legend.horizontalPosition;
-        $scope.chartConfig.options.legend.verticalAlign = $scope.legend.verticalPosition;
-        $scope.chartConfig.options.legend.layout = $scope.legend.layout;
-        $scope.chartConfig.options.legend.x = parseInt($scope.legend.x);
-        $scope.chartConfig.options.legend.y = $scope.legend.y;
-        $scope.chartConfig.options.legend.title.text = $scope.legend.title;
+        $scope.chartConfig.options.legend = passByValue($scope.legend);    
 
         $scope.json.output = JSON.stringify($scope.chartConfig, replacer, '\t');
     };
+
+    $scope.change();
 
     $scope.seriesCheck = function(){
         if($scope.series.type === 'default'){
@@ -208,24 +198,32 @@ angular.module('highChartDesignerApp')
 
         
         if($scope.series.name === $scope.series.last){
+
             if($scope.series.added){
                 $scope.series.name = $scope.series.name.slice(0, -1) + $scope.series.counter;
             }else{
                 $scope.series.name = $scope.series.name + $scope.series.counter;
             }
+
             $scope.series.last = $scope.series.name;
             $scope.series.counter += 1;
             $scope.series.added = true;
+
         }else{
+
             $scope.series.added = false;
             $scope.series.last = $scope.series.name;
             $scope.series.counter = 1;
+
         }
+
         $scope.chartConfig.series.push({
+
         	name: $scope.series.name,
         	color: $scope.series.color,
             data: getRandomData($scope.series.num,$scope.series.min,$scope.series.max),
             type: $scope.seriesCheck()
+
         });
 
         $scope.series.color = getRandomColor();
@@ -248,14 +246,6 @@ angular.module('highChartDesignerApp')
 
     $scope.applySelecter = function(){
     	angular.element('select').selecter();
-    };
-
-    $scope.changeVariable = function(incr, add, model){
-        if(add){
-            $scope.legend[model] = $scope.legend[model] + incr;
-        }else{
-            $scope.legend[model] = $scope.legend[model] - incr;
-        }
     };
 
   })
@@ -308,7 +298,7 @@ angular.module('highChartDesignerApp')
             },
             templateUrl: 'views/partials/panelWrapper.html',
             link: function(scope) {
-                scope['panel-' + scope.title] = false;
+                scope['panel-' + scope.title] = true;
 
                 //slide control
                 scope.slideDown = function(id){

@@ -1,5 +1,18 @@
 <div class="container documents">
 
+  <div class="row">
+    
+    <!--Code-->
+    <panel size="12" title="Code">        
+            
+      <wrapper max="10" min="1">
+        <code hljs class="json" source="json.output">
+        </code>
+      </wrapper>    
+
+   </panel>     
+  </div>
+
   <div class="row"> 
     <div class="col-md-12">      
       <div class="panel panel-primary">              
@@ -210,7 +223,7 @@
 
       </div>  
 
-      <!-- COLUMN 2 -->
+      <!-- COLUMN 3 -->
       <div class="col-md-4">
         
         <wrapper max="10" min="1">
@@ -276,70 +289,195 @@
   </div>
 
   <div class="row">
-    <!--Legend-->
+    <!-- SERIES (PANEL 1) -->
     <panel size="12" title="Legend" ng-cloak>
-      
+
+      <!-- Column 1 -->
       <div class="col-md-4">
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Enabled</span>
+            <select ng-model="legend.enabled" ng-options='item for item in lists.bool' class="form-control"></select>
+          </div>
+        </wrapper>
+
         <wrapper max="10" min="1">
           <div class="input-group">
             <span class="input-group-addon">Title</span>
-            <input type="text" class="form-control" ng-model="legend.title">
+            <input type="text" class="form-control" ng-model="legend.title" set-null>
           </div>
         </wrapper>
 
         <wrapper max="10" min="1">
           <div class="input-group">
-            <span class="input-group-addon">Horizontal Align</span>           
-            <select ng-model="legend.horizontalPosition" ng-options='item for item in positions.horizontal' class="form-control">
-            </select>
+            <span class="input-group-addon">Floating</span>
+            <select ng-model="legend.enabled" ng-options='item for item in lists.bool' class="form-control"></select>
           </div>
         </wrapper>
-     
+
         <wrapper max="10" min="1">
           <div class="input-group">
-            <span class="input-group-addon">Vertical Align</span>           
-            <select ng-model="legend.verticalPosition" ng-options='item for item in positions.vertical' class="form-control">
-            </select>
+            <span class="input-group-addon">Horizontal Align</span>
+            <select ng-model="legend.align" ng-options='item for item in lists.horizontal' class="form-control"></select>
           </div>
         </wrapper>
-            
+
         <wrapper max="10" min="1">
           <div class="input-group">
-            <span class="input-group-addon">Layout</span>           
-            <select ng-model="legend.layout" ng-options='item for item in positions.align' class="form-control">
-            </select>
+            <span class="input-group-addon">Vertical Align</span>
+            <select ng-model="legend.verticalAlign" ng-options='item for item in lists.vertical' class="form-control"></select>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Layout</span>
+            <select ng-model="legend.layout" ng-options='item for item in lists.align' class="form-control"></select>
+          </div>
+        </wrapper>
+        
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Shadow</span>
+            <select ng-model="legend.shadow" ng-options='item for item in lists.bool' class="form-control"></select>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">RTL</span>
+            <select ng-model="legend.rtl" ng-options='item for item in lists.bool' class="form-control"></select>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Reversed</span>
+            <select ng-model="legend.reversed" ng-options='item for item in lists.bool' class="form-control"></select>
+          </div>
+        </wrapper>
+      </div>
+
+      <!-- COLUMN 2 -->
+      <div class="col-md-4">
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Background Color</span>
+            <input type="text" class="form-control" ng-model="legend.backgroundColor" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Border Color</span>
+            <input type="text" class="form-control" ng-model="legend.borderColor" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Border Radius</span>
+            <input type="text" class="form-control" ng-model="legend.borderRadius" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Border Width</span>
+            <input type="text" class="form-control" ng-model="legend.borderWidth" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Label Format</span>
+            <input type="text" class="form-control" ng-model="legend.labelFormat" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">x offset</span>
+            <input type="text" class="form-control" ng-model="legend.x" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">y offset</span>
+            <input type="text" class="form-control" ng-model="legend.y" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Width</span>
+            <input type="text" class="form-control" ng-model="legend.width" set-null>
+          </div>
+        </wrapper>
+      </div>
+
+      <div class="col-md-4">
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Item Distance</span>
+            <input type="text" class="form-control" ng-model="legend.itemDistance" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Item Margin Bottom</span>
+            <input type="text" class="form-control" ng-model="legend.itemMarginBottom" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Item Margin Top</span>
+            <input type="text" class="form-control" ng-model="legend.itemMarginTop" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Item Width</span>
+            <input type="text" class="form-control" ng-model="legend.itemWidth" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Line Height</span>
+            <input type="text" class="form-control" ng-model="legend.lineHeight" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Margin</span>
+            <input type="text" class="form-control" ng-model="legend.margin" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Max Height</span>
+            <input type="text" class="form-control" ng-model="legend.maxHeight" set-null>
+          </div>
+        </wrapper>
+
+        <wrapper max="10" min="1">
+          <div class="input-group">
+            <span class="input-group-addon">Padding</span>
+            <input type="text" class="form-control" ng-model="legend.padding" set-null>
           </div>
         </wrapper>
       </div>
       
-      <div class="col-md-4">
-        <wrapper max="10" min="1">              
-            <div class="input-group">
-              <div class="input-group-btn">
-                <button type="button" class="btn btn-info" ng-click="changeVariable(5, false, 'x')">x-</button>
-              </div>
-              <input type="text" class="form-control center" ng-model="legend.x" only-digits/>
-              <div class="input-group-btn">
-                <button type="button" class="btn btn-info" ng-click="changeVariable(5, true, 'x')">x+</button>
-              </div>
-            </div>              
-        </wrapper>
-
-        <wrapper max="10" min="1">              
-            <div class="input-group">
-              <div class="input-group-btn">
-                <button type="button" class="btn btn-info" ng-click="changeVariable(5, false, 'y')">y-</button>
-              </div>
-              <input type="text" class="form-control center" ng-model="legend.y" only-digits/>
-              <div class="input-group-btn">
-                <button type="button" class="btn btn-info" ng-click="changeVariable(5, true, 'y')">y+</button>
-              </div>
-            </div>              
-        </wrapper>
-      </div>
-
     </panel>
-  </div>
+
+  </div>  
 
   <div class="row">
   <!--Labels-->
@@ -377,17 +515,4 @@
       </div>
     </panel>
   </div>
-
-  
-  <div class="row">
-    
-    <!--Code-->
-    <panel size="12" title="Code">        
-            
-      <wrapper max="10" min="1">
-        <code hljs class="json" source="json.output">
-        </code>
-      </wrapper>    
-
-   </panel>     
-  </div>
+</div>
